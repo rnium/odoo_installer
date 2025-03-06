@@ -114,7 +114,7 @@ create_service_file() {
     local source_dir="$basedir/server/$repo-$version"
     local envdir="$basedir/venv/$repo-$version-env"
     local conf_file="$basedir/conf/$repo$version.conf"
-    local service_file_name="$repo-$version-demo.service"
+    local service_file_name="$repo-$version.service"
     local service_file="/etc/systemd/system/$service_file_name"
     
     # Create log directory with proper permissions
@@ -159,7 +159,7 @@ EOF
 
 install_odoo_version() {
     local version="$1"
-    local basedir="/opt/OdooTemp"
+    local basedir="/opt/odoo"
     local repo="odoo"
     local gh_user="odoo"
     local owner="odoo"
