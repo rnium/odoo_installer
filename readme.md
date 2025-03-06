@@ -14,7 +14,6 @@ This repository contains a Bash script that automates the installation of multip
 Ensure you have the following installed on your system:
 - Git
 - Bash
-- PostgreSQL
 - `sudo` privileges
 
 ## Installation & Execution
