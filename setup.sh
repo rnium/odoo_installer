@@ -169,9 +169,7 @@ install_odoo_version() {
 main() {
     create_user_group odoo odoo
     install_system_packages
-	install_odoo_version 16
 	install_odoo_version 17
-	install_odoo_version 18
 }
 
 main
