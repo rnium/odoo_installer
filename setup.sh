@@ -19,7 +19,8 @@ create_user_group() {
 install_system_packages() {
     echo "Installing system packages..."
     sudo apt-get update
-        sudo apt install -y python3-pip python3-virtualenv libldap2-dev libpq-dev libsasl2-dev
+    sudo apt install -y python3-pip python3-virtualenv libldap2-dev libpq-dev libsasl2-dev
+    sudo apt install -y postgresql
 }
 
 clone_repo() {
