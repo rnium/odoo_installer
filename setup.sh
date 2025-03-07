@@ -157,6 +157,15 @@ EOF
     sudo systemctl status $service_file_name
 }
 
+print_summary() {
+    echo "Installation Summary"
+    echo "====================="
+    echo "Installed Odoo Version: $version"
+    echo "Base Directory: $basedir"
+    echo "Default Admin Password: $DEFAULT_ADMIN_PASSWORD"
+    echo "To install another version, re-run this script (*/setup.sh) and enter the desired version when prompted."
+}
+
 install_odoo_version() {
     local version="$1"
     local basedir="/opt/odoo"
@@ -169,6 +178,7 @@ install_odoo_version() {
     create_postgres_user $version
     create_conf_file $basedir $repo $version $owner
     create_service_file $basedir $repo $version $owner
+    print_summary
 }
 
 main() {
