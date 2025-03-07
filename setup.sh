@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEFAULT_ADMIN_PASSWORD="Admin#1234"
+DEFAULT_ADMIN_PASSWORD="admin1234"
 DEFAULT_DB_PORT=5432
 DEFAULT_DB_PASSWORD="admin"
 
@@ -172,9 +172,15 @@ install_odoo_version() {
 }
 
 main() {
-    create_user_group odoo odoo
-    install_system_packages
-	install_odoo_version 17
+    read -p "Enter Odoo version to install (16, 17, or 18): " version
+    if [[ "$version" =~ ^(16|17|18)$ ]]; then
+        create_user_group odoo odoo
+        install_system_packages
+        install_odoo_version $version
+    else
+        echo "Invalid version. Please enter 16, 17, or 18."
+        exit 1
+    fi
 }
 
 main
