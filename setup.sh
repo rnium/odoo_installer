@@ -34,8 +34,7 @@ clone_repo() {
     local workdir=$basedir/server
     sudo mkdir -p $workdir
     cd $workdir
-    sudo git clone https://github.com/$gh_user/$repo.git --depth 1 --branch $branch --single-branch
-    sudo mv $repo "$repo-$version"
+    sudo git clone https://github.com/$gh_user/$repo.git --depth 1 --branch $branch --single-branch "$repo-$version"
 }
 
 create_venv() {
@@ -66,7 +65,7 @@ install_requirements() {
 
 create_postgres_user() {
     local version="$1"
-    local db_user="odoo$version-demouser"
+    local db_user="odoo$version-user"
     local db_password=$DEFAULT_DB_PASSWORD
 
     echo "Creating PostgreSQL user $db_user..."
@@ -91,7 +90,7 @@ create_conf_file() {
     local owner=$4
     local conf_dir="$basedir/conf"
     local conf_file="$conf_dir/$repo$version.conf"
-    local db_user="$repo$version-demouser"
+    local db_user="$repo$version-user"
     sudo mkdir -p $conf_dir
     sudo touch $conf_file
     {
@@ -182,13 +181,13 @@ install_odoo_version() {
 }
 
 main() {
-    read -p "Enter Odoo version to install (16, 17, or 18): " version
-    if [[ "$version" =~ ^(16|17|18)$ ]]; then
+    read -p "Enter Odoo version to install (17, 18, or 19): " version
+    if [[ "$version" =~ ^(17|18|19)$ ]]; then
         create_user_group odoo odoo
         install_system_packages
         install_odoo_version $version
     else
-        echo "Invalid version. Please enter 16, 17, or 18."
+        echo "Invalid version. Please enter 17, 18, or 19."
         exit 1
     fi
 }
