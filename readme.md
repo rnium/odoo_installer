@@ -19,8 +19,14 @@ Ensure you have the following installed on your system:
 ## Installation & Execution
 Run the following command in your terminal to clone the repository, make the script executable, and execute it in a single step:
 
+Ubuntu/Debian:
 ```bash
-repo_url="https://github.com/rnium/odoo_installer" && git clone "$repo_url" && cd "$(basename "$repo_url")" && chmod +x setup.sh && sudo ./setup.sh
+bash <(curl -s https://raw.githubusercontent.com/rnium/odoo_installer/main/setup.sh)
+```
+
+OpenSUSE:
+```bash
+bash <(curl -s https://raw.githubusercontent.com/rnium/odoo_installer/main/setup_suse.sh)
 ```
 
 ## License
