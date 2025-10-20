@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEFAULT_ADMIN_PASSWORD="admin"
+DEFAULT_ADMIN_PASSWORD="nimda4321"
 DEFAULT_DB_PORT=5432
 DEFAULT_DB_PASSWORD="admin"
 
@@ -19,7 +19,7 @@ create_user_group() {
 install_system_packages() {
     echo "Installing system packages..."
     sudo apt-get update
-    sudo apt install -y python3-pip python3-virtualenv libldap2-dev libpq-dev libsasl2-dev
+    sudo apt install -y git python3-pip python3-virtualenv libldap2-dev libpq-dev libsasl2-dev
     sudo apt install -y postgresql
 }
 
@@ -58,9 +58,12 @@ install_requirements() {
     local owner=$4
     local source_dir="$basedir/server/$repo-$version"
     local envdir="$basedir/venv/$repo-$version-env"
-    source $envdir/bin/activate
-    pip install -r $source_dir/requirements.txt
-    deactivate
+    sudo -u $owner bash -c "
+        source $envdir/bin/activate
+        pip install --upgrade pip
+        pip install --no-cache-dir -r $source_dir/requirements.txt
+        deactivate
+    "
 }
 
 create_postgres_user() {
@@ -127,7 +130,7 @@ create_service_file() {
     echo "Creating $repo-$version service file..."
     sudo tee $service_file > /dev/null <<EOF
 [Unit]
-Description=Odoo $version Demo Service
+Description=Odoo $version Service
 Documentation=https://www.odoo.com
 After=postgresql.service
 
@@ -162,7 +165,7 @@ print_summary() {
     echo "Installed Odoo Version: $version"
     echo "Base Directory: $basedir"
     echo "Default Admin Password: $DEFAULT_ADMIN_PASSWORD"
-    echo "To install another version, re-run this script (*/setup.sh) and enter the desired version when prompted."
+    echo "To install another version, re-run this script and enter the desired version when prompted."
 }
 
 install_odoo_version() {
