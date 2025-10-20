@@ -121,11 +121,20 @@ create_service_file() {
     
     # Create log directory with proper permissions
     sudo mkdir -p /var/log/odoo
-    sudo chown $owner:$owner /var/log/odoo
+    sudo chown -R $owner:$owner /var/log/odoo
+    sudo chmod 755 /var/log/odoo
 
     # Create session directory with proper permissions
     sudo mkdir -p /var/lib/odoo
-    sudo chown $owner:$owner /var/lib/odoo
+    sudo chown -R $owner:$owner /var/lib/odoo
+    sudo chmod 755 /var/lib/odoo
+
+    # Ensure configuration file has proper ownership
+    sudo chown $owner:$owner $conf_file
+    sudo chmod 640 $conf_file
+
+    # Ensure all odoo directories have proper ownership
+    sudo chown -R $owner:$owner $basedir
 
     echo "Creating $repo-$version service file..."
     sudo tee $service_file > /dev/null <<EOF
