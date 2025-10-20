@@ -23,6 +23,15 @@ install_system_packages() {
     sudo apt install -y postgresql
 }
 
+install_pgadmin() {
+    echo "Installing pgAdmin4..."
+    curl -fsS https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /usr/share/keyrings/packages-pgadmin-org.gpg
+    # Create the repository configuration file:
+    sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
+    # Install for desktop mode only:
+    sudo apt install pgadmin4-desktop
+}
+
 clone_repo() {
     echo "Cloning repository..."
     local basedir=$1
@@ -197,6 +206,12 @@ main() {
     if [[ "$version" =~ ^(17|18|19)$ ]]; then
         create_user_group odoo odoo
         install_system_packages
+        
+        read -p "Do you want to install pgAdmin4? (y/n): " install_pg
+        if [[ "$install_pg" =~ ^[Yy]$ ]]; then
+            install_pgadmin
+        fi
+        
         install_odoo_version $version
     else
         echo "Invalid version. Please enter 17, 18, or 19."
